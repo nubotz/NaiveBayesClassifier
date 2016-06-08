@@ -18,7 +18,9 @@ package com.datumbox.opensource.examples;
 
 import com.datumbox.opensource.classifiers.NaiveBayes;
 import com.datumbox.opensource.dataobjects.NaiveBayesKnowledgeBase;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -67,9 +69,9 @@ public class NaiveBayesExample {
     public static void main(String[] args) throws IOException {
         //map of dataset files
         Map<String, URL> trainingFiles = new HashMap<>();
-        trainingFiles.put("English", NaiveBayesExample.class.getResource("/datasets/training.language.en.txt"));
-        trainingFiles.put("French", NaiveBayesExample.class.getResource("/datasets/training.language.fr.txt"));
-        trainingFiles.put("German", NaiveBayesExample.class.getResource("/datasets/training.language.de.txt"));
+        trainingFiles.put("pos", new File("/home/cloudera/Desktop/positive-.txt").toURL());
+        trainingFiles.put("neg", new File("/home/cloudera/Desktop/negative.txt").toURL());
+        
         
         //loading examples in memory
         Map<String, String[]> trainingExamples = new HashMap<>();
@@ -91,17 +93,10 @@ public class NaiveBayesExample {
         
         //Use classifier
         nb = new NaiveBayes(knowledgeBase);
-        String exampleEn = "I am English";
+        String exampleEn = "love";
         String outputEn = nb.predict(exampleEn);
         System.out.format("The sentense \"%s\" was classified as \"%s\".%n", exampleEn, outputEn);
         
-        String exampleFr = "Je suis Français";
-        String outputFr = nb.predict(exampleFr);
-        System.out.format("The sentense \"%s\" was classified as \"%s\".%n", exampleFr, outputFr);
-        
-        String exampleDe = "Ich bin Deutsch";
-        String outputDe = nb.predict(exampleDe);
-        System.out.format("The sentense \"%s\" was classified as \"%s\".%n", exampleDe, outputDe);
         
 
     }
